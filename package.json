@@ -12,8 +12,10 @@
     "@astrojs/ts-plugin": "^1.10.5",
     "@astrojs/vercel": "^9.0.1",
     "@supabase/supabase-js": "^2.84.0",
+    "@tailwindcss/vite": "^4.1.17",
     "astro": "^5.16.0",
     "react": "^19.2.0",
-    "tailwind": "^4.0.0"
+    "tailwind": "^4.0.0",
+    "tailwindcss": "^4.1.17"
   }
 }
