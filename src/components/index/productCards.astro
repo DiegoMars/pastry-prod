@@ -1,0 +1,79 @@
+---
+import { getCollection } from "astro:content";
+// import { Image } from "astro:assets";
+
+// Load all entries from the `products` collection
+const products = await getCollection("products");
+
+const currency = new Intl.NumberFormat("en-US", {
+  style: "currency",
+  currency: "USD",
+});
+---
+
+<section class="px-4 py-8">
+  <div class="max-w-6xl mx-auto">
+    <h2 class="text-center text-2xl md:text-3xl font-bold text-text mb-8">
+      Our Treats
+    </h2>
+
+    <div
+      class="grid gap-8 sm:grid-cols-2 lg:grid-cols-3"
+    >
+      {products.map(({ id, data }) => {
+        const inStock =
+          typeof data.stock === "number" ? data.stock > 0 : data.inStock ?? true;
+
+        return (
+          <article
+            class="bg-background/90 rounded-3xl shadow-xl border border-accent-200/60 overflow-hidden flex flex-col hover:shadow-2xl transition"
+          >
+            {data.image && (
+              <div class="relative aspect-[4/3] overflow-hidden">
+                <img
+                  src={data.image}
+                  alt={data.imageAlt ?? data.title}
+                  class="h-full w-full object-cover"
+                  loading="lazy"
+                />
+              </div>
+            )}
+
+            <div class="flex flex-col flex-1 px-5 py-4 gap-2 text-center">
+              <h3 class="font-[Bubblegum_Sans] text-xl md:text-2xl text-text-700">
+                {data.title}
+              </h3>
+
+              {data.description && (
+                <p class="text-sm text-text-600 mt-1">
+                  {data.description}
+                </p>
+              )}
+
+              <div class="mt-3 flex flex-col items-center gap-1">
+                <p class="text-lg font-semibold text-primary-700">
+                  {currency.format(data.price)}
+                </p>
+
+                <p
+                  class={
+                    "text-sm font-semibold " +
+                    (inStock
+                      ? "text-primary-700"
+                      : "text-accent-700")
+                  }
+                >
+                  {inStock
+                    ? (typeof data.stock === "number"
+                        ? `In stock (${data.stock})`
+                        : "In stock")
+                    : "Sold out"}
+                </p>
+              </div>
+            </div>
+          </article>
+        );
+      })}
+    </div>
+  </div>
+</section>
