@@ -1,78 +1,126 @@
-@import url('https://fonts.googleapis.com/css?family=Playwrite%20US%20Modern:700|Playwrite%20US%20Modern:400');
+@import url('https://fonts.googleapis.com/css2?family=Bubblegum+Sans&family=Lobster&family=Pacifico&display=swap');
 @import "tailwindcss";
 
 @theme {
- --color-text: #f0f5ee;
- --color-background: #0f150d;
- --color-primary: #73d94b;
- --color-secondary: #416e68;
- --color-accent: #eb67dd;
+  --color-text: #b7527a;
+  --color-background: #fffaf8;
+  --color-primary: #f69a57;
+  --color-secondary: #a08ccb;
+  --color-accent: #efbfcf;
 
- --color-text-50: #f1f6ef;
- --color-text-100: #e3ecdf;
- --color-text-200: #c6d9bf;
- --color-text-300: #aac69f;
- --color-text-400: #8eb47e;
- --color-text-500: #71a15e;
- --color-text-600: #5b814b;
- --color-text-700: #446039;
- --color-text-800: #2d4026;
- --color-text-900: #172013;
- --color-text-950: #0b1009;
+  --color-text-50: #fceef3;
+  --color-text-100: #f9dde7;
+  --color-text-200: #f3bbcf;
+  --color-text-300: #ed99b7;
+  --color-text-400: #e7779f;
+  --color-text-500: #b7527a;
+  --color-text-600: #9a4467;
+  --color-text-700: #7c3753;
+  --color-text-800: #5f2a3f;
+  --color-text-900: #411c2b;
+  --color-text-950: #210e16;
 
- --color-background-50: #f1f5ef;
- --color-background-100: #e2ecdf;
- --color-background-200: #c6d8c0;
- --color-background-300: #a9c5a0;
- --color-background-400: #8db181;
- --color-background-500: #709e61;
- --color-background-600: #5a7e4e;
- --color-background-700: #435f3a;
- --color-background-800: #2d3f27;
- --color-background-900: #162013;
- --color-background-950: #0b100a;
+  --color-background-50: #fffefc;
+  --color-background-100: #fffaf8;
+  --color-background-200: #fff3eb;
+  --color-background-300: #ffe3cc;
+  --color-background-400: #fcd2ad;
+  --color-background-500: #f69a57;
+  --color-background-600: #d88242;
+  --color-background-700: #b96b36;
+  --color-background-800: #7b4724;
+  --color-background-900: #3d2312;
+  --color-background-950: #1f1209;
 
- --color-primary-50: #effbea;
- --color-primary-100: #def6d5;
- --color-primary-200: #beedab;
- --color-primary-300: #9de481;
- --color-primary-400: #7cdb57;
- --color-primary-500: #5cd22d;
- --color-primary-600: #49a824;
- --color-primary-700: #377e1b;
- --color-primary-800: #255412;
- --color-primary-900: #122a09;
- --color-primary-950: #091504;
+  --color-primary-50: #fff7f2;
+  --color-primary-100: #ffe9d7;
+  --color-primary-200: #ffd2af;
+  --color-primary-300: #ffba87;
+  --color-primary-400: #f69a57;
+  --color-primary-500: #d57f45;
+  --color-primary-600: #b56539;
+  --color-primary-700: #954b2d;
+  --color-primary-800: #63321e;
+  --color-primary-900: #32190f;
+  --color-primary-950: #190c08;
 
- --color-secondary-50: #eff6f5;
- --color-secondary-100: #dfecea;
- --color-secondary-200: #bfd9d6;
- --color-secondary-300: #9fc6c1;
- --color-secondary-400: #7eb4ac;
- --color-secondary-500: #5ea198;
- --color-secondary-600: #4b8179;
- --color-secondary-700: #39605b;
- --color-secondary-800: #26403d;
- --color-secondary-900: #13201e;
- --color-secondary-950: #09100f;
+  --color-secondary-50: #f8f6fc;
+  --color-secondary-100: #eee9fa;
+  --color-secondary-200: #d9cff5;
+  --color-secondary-300: #c4b5ef;
+  --color-secondary-400: #a08ccb;
+  --color-secondary-500: #8774b0;
+  --color-secondary-600: #6d5d90;
+  --color-secondary-700: #53466f;
+  --color-secondary-800: #392f4f;
+  --color-secondary-900: #1e1828;
+  --color-secondary-950: #0f0c14;
 
- --color-accent-50: #fce8fa;
- --color-accent-100: #f9d2f5;
- --color-accent-200: #f3a5eb;
- --color-accent-300: #ed78e2;
- --color-accent-400: #e84ad8;
- --color-accent-500: #e21dce;
- --color-accent-600: #b517a5;
- --color-accent-700: #87127c;
- --color-accent-800: #5a0c52;
- --color-accent-900: #2d0629;
- --color-accent-950: #170315;
+  --color-accent-50: #fff7f9;
+  --color-accent-100: #feeef3;
+  --color-accent-200: #fcdce7;
+  --color-accent-300: #f9cadb;
+  --color-accent-400: #efbfcf;
+  --color-accent-500: #e49ab0;
+  --color-accent-600: #d97591;
+  --color-accent-700: #c04a6d;
+  --color-accent-800: #7f3249;
+  --color-accent-900: #3f1924;
+  --color-accent-950: #1f0c12;
 
- --font-fancy: Playwrite US Modern;
+  --font-fancy: "Pacifico", "Lobster", "Bubblegum Sans";
+  --font-fancy2: "Bubblegum Sans", "Lobster", "Pacifico";
 }
 
 body {
-  background-color: var(--color-background);
+  /* background: linear-gradient( */
+  /*   to bottom, */
+  /*   var(--color-background-50), */
+  /*   var(--color-background-100), */
+  /*   var(--color-background-200) */
+  /* ); */
+  /* top layer: super subtle vertical stripes */
+  background:
+    repeating-linear-gradient(
+      to right,
+      rgba(239, 191, 207, 0.16) 0px,   /* light pink stripe */
+      rgba(239, 191, 207, 0.16) 1px,
+      transparent 1px,
+      transparent 14px
+    ),
+    /* base: your existing soft vertical gradient */
+    linear-gradient(
+      to bottom,
+      var(--color-background-50),
+      var(--color-background-100),
+      var(--color-background-200)
+    );
+  background:
+    radial-gradient(
+      circle at 1px 1px,
+      color-mix(in srgb, var(--color-accent-700), transparent 75%) 1.5px,
+      transparent 0
+    ) 0 0 / 18px 18px repeat,
+    linear-gradient(
+      to bottom,
+      var(--color-background-50),
+      var(--color-background-100),
+      var(--color-background-200)
+    );
   color: var(--color-text);
   font-family: "Georgia", "Times New Roman", serif;
+}
+
+.pinkFancy {
+  font-family: var(--font-fancy);
+  color: var(--color-background); /* white/cream fill */
+  font-weight: 400;
+
+  text-shadow:
+    0 0 1px var(--color-accent-500),
+    2px 2px 0 var(--color-accent-600),
+    -2px 2px 0 var(--color-accent-600),
+    2px -2px 0 var(--color-accent-600),
+    -2px -2px 0 var(--color-accent-600),
+    0 8px 6px color-mix(in srgb, var(--color-text-900), transparent 70%);
 }
