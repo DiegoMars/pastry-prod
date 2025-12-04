@@ -1,8 +1,7 @@
 ---
 import { getCollection } from "astro:content";
-// import { Image } from "astro:assets";
+import { Image } from "astro:assets";
 
-// Load all entries from the `products` collection
 const products = await getCollection("products");
 
 const currency = new Intl.NumberFormat("en-US", {
@@ -11,69 +10,200 @@ const currency = new Intl.NumberFormat("en-US", {
 });
 ---
 
-<section class="px-4 py-8">
+<section class="px-4 py-12">
   <div class="max-w-6xl mx-auto">
-    <h2 class="text-center text-2xl md:text-3xl font-bold text-text mb-8">
+    <h2 class="text-center text-3xl md:text-4xl font-bold text-text mb-10">
       Our Treats
     </h2>
 
-    <div
-      class="grid gap-8 sm:grid-cols-2 lg:grid-cols-3"
-    >
-      {products.map(({ id, data }) => {
-        const inStock =
-          typeof data.stock === "number" ? data.stock > 0 : data.inStock ?? true;
+    {products.length === 0 && (
+      <p class="text-center text-text-700">
+        (No products yet – add JSON files in <code>src/collections/products</code>.)
+      </p>
+    )}
 
-        return (
-          <article
-            class="bg-background/90 rounded-3xl shadow-xl border border-accent-200/60 overflow-hidden flex flex-col hover:shadow-2xl transition"
-          >
-            {data.image && (
-              <div class="relative aspect-[4/3] overflow-hidden">
-                <img
-                  src={data.image}
-                  alt={data.imageAlt ?? data.title}
-                  class="h-full w-full object-cover"
-                  loading="lazy"
-                />
+    {products.length > 0 && (
+      <div class="grid gap-10 sm:grid-cols-2 lg:grid-cols-3">
+        {products.map(({ id, data }) => {
+          const inStock =
+            typeof data.stock === "number" ? data.stock > 0 : data.inStock ?? true;
+
+          return (
+            <article class="blobCard glitterHover">
+
+              <!-- BLOB SHAPE IMAGE -->
+              <div class="blobShape">
+                {data.image && (
+                  <img
+                    src={data.image}
+                    alt={data.imageAlt ?? data.title}
+                    class="h-full w-full object-cover"
+                    loading="lazy"
+                  />
+                )}
               </div>
-            )}
 
-            <div class="flex flex-col flex-1 px-5 py-4 gap-2 text-center">
-              <h3 class="font-[Bubblegum_Sans] text-xl md:text-2xl text-text-700">
-                {data.title}
-              </h3>
+              <!-- TEXT AREA -->
+              <div class="blobInfo">
+                <h3 class="font-[Bubblegum_Sans] text-xl md:text-2xl text-text-700">
+                  {data.title}
+                </h3>
 
-              {data.description && (
-                <p class="text-sm text-text-600 mt-1">
-                  {data.description}
-                </p>
-              )}
+                {data.description && (
+                  <p class="text-sm text-text-600 mt-1">
+                    {data.description}
+                  </p>
+                )}
 
-              <div class="mt-3 flex flex-col items-center gap-1">
-                <p class="text-lg font-semibold text-primary-700">
-                  {currency.format(data.price)}
-                </p>
+                <div class="blobMeta">
+                  <span class="priceRibbon">
+                    {currency.format(data.price)}
+                  </span>
 
-                <p
-                  class={
-                    "text-sm font-semibold " +
-                    (inStock
-                      ? "text-primary-700"
-                      : "text-accent-700")
-                  }
-                >
-                  {inStock
-                    ? (typeof data.stock === "number"
-                        ? `In stock (${data.stock})`
-                        : "In stock")
-                    : "Sold out"}
-                </p>
+                  <span class={`stockText ${inStock ? "stockIn" : "stockOut"}`}>
+                    {inStock
+                      ? (typeof data.stock === "number"
+                          ? `In stock (${data.stock})`
+                          : "In stock")
+                      : "Sold out"}
+                  </span>
+                </div>
               </div>
-            </div>
-          </article>
-        );
-      })}
-    </div>
+            </article>
+          );
+        })}
+      </div>
+    )}
   </div>
 </section>
+
+<style>
+
+section {
+  background:
+    url("/stars-bg.svg") repeat,
+    linear-gradient(
+      to bottom,
+      var(--color-background-50),
+      var(--color-background-100),
+      var(--color-background-200)
+    );
+  background-size:
+    180px 180px,  /* smaller tile = more stars */
+    auto;
+  background-blend-mode:
+    normal,
+    normal;
+
+  color: var(--color-text);
+  font-family: "Georgia", "Times New Roman", serif;
+}
+
+  /* STOCK TEXT */
+  .stockText {
+    font-size: 0.75rem;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+    margin-top: 0.35rem;
+  }
+  .stockIn {
+    color: var(--color-primary-700);
+  }
+  .stockOut {
+    color: var(--color-accent-700);
+  }
+
+  /* MAIN BLOB LAYOUT */
+  .blobCard {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.9rem;
+    padding: 0.25rem;
+  }
+
+  /* BLOB SHAPE (SOFT ORGANIC STICKER) */
+  .blobShape {
+    width: 100%;
+    max-width: 18rem;
+    aspect-ratio: 4 / 3;
+    border-radius: 40% 60% 45% 55% / 55% 40% 60% 45%;
+    background: var(--color-accent-50);
+    padding: 0.3rem;
+    position: relative;
+    overflow: hidden;
+    border: 2px solid var(--color-accent-300);
+  }
+  .blobShape img {
+    border-radius: inherit;
+  }
+
+  /* TEXT AREA UNDER BLOB */
+  .blobInfo {
+    text-align: center;
+    max-width: 18rem;
+  }
+
+  .blobMeta {
+    margin-top: 0.6rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+    align-items: center;
+  }
+
+  /* RIBBON-STYLE PRICE TAG */
+  .priceRibbon {
+    position: relative;
+    display: inline-block;
+    padding: 0.45rem 1.4rem;
+    background: var(--color-primary-200);
+    color: var(--color-text-900);
+    font-weight: 700;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    clip-path: polygon(
+      0 0,
+      90% 0,
+      100% 50%,
+      90% 100%,
+      0 100%,
+      5% 50%
+    );
+    border: 2px solid var(--color-primary-400);
+  }
+
+  /* GLITTER FLASH HOVER EFFECT */
+  .glitterHover {
+    position: relative;
+    overflow: hidden;
+  }
+  .glitterHover::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      120deg,
+      transparent 0%,
+      rgba(255, 255, 255, 0.7) 50%,
+      transparent 100%
+    );
+    transform: translateX(-120%);
+    opacity: 0;
+    pointer-events: none;
+  }
+  .glitterHover:hover::before {
+    opacity: 1;
+    animation: glitterSweep 0.7s linear forwards;
+  }
+
+  @keyframes glitterSweep {
+    from {
+      transform: translateX(-120%);
+    }
+    to {
+      transform: translateX(120%);
+    }
+  }
+</style>

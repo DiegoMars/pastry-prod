@@ -73,54 +73,19 @@
 }
 
 body {
-  /* background: linear-gradient( */
-  /*   to bottom, */
-  /*   var(--color-background-50), */
-  /*   var(--color-background-100), */
-  /*   var(--color-background-200) */
-  /* ); */
-  /* top layer: super subtle vertical stripes */
-  background:
-    repeating-linear-gradient(
-      to right,
-      rgba(239, 191, 207, 0.16) 0px,   /* light pink stripe */
-      rgba(239, 191, 207, 0.16) 1px,
-      transparent 1px,
-      transparent 14px
-    ),
-    /* base: your existing soft vertical gradient */
-    linear-gradient(
-      to bottom,
-      var(--color-background-50),
-      var(--color-background-100),
-      var(--color-background-200)
-    );
-  background:
-    radial-gradient(
-      circle at 1px 1px,
-      color-mix(in srgb, var(--color-accent-700), transparent 75%) 1.5px,
-      transparent 0
-    ) 0 0 / 18px 18px repeat,
-    linear-gradient(
-      to bottom,
-      var(--color-background-50),
-      var(--color-background-100),
-      var(--color-background-200)
-    );
+  background: var(--color-background);
   color: var(--color-text);
   font-family: "Georgia", "Times New Roman", serif;
 }
 
 .pinkFancy {
   font-family: var(--font-fancy);
-  color: var(--color-background); /* white/cream fill */
+  color: var(--color-background); /* inner text */
   font-weight: 400;
-
   text-shadow:
     0 0 1px var(--color-accent-500),
     2px 2px 0 var(--color-accent-600),
     -2px 2px 0 var(--color-accent-600),
     2px -2px 0 var(--color-accent-600),
-    -2px -2px 0 var(--color-accent-600),
-    0 8px 6px color-mix(in srgb, var(--color-text-900), transparent 70%);
+    -2px -2px 0 var(--color-accent-600);
 }
