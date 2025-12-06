@@ -1,6 +1,6 @@
 ---
 import { getCollection } from "astro:content";
-import { Image } from "astro:assets";
+// import { Image } from "astro:assets";
 
 const products = await getCollection("products");
 
@@ -29,7 +29,7 @@ const currency = new Intl.NumberFormat("en-US", {
             typeof data.stock === "number" ? data.stock > 0 : data.inStock ?? true;
 
           return (
-            <article class="blobCard glitterHover">
+           <a href={`#${data.title}`} id={data.title} class="flex flex-col content-center gap-[0.9rem] p-[0.25rem]">
 
               <!-- BLOB SHAPE IMAGE -->
               <div class="blobShape">
@@ -44,8 +44,8 @@ const currency = new Intl.NumberFormat("en-US", {
               </div>
 
               <!-- TEXT AREA -->
-              <div class="blobInfo">
-                <h3 class="font-[Bubblegum_Sans] text-xl md:text-2xl text-text-700">
+              <div class="text-center max-w-[18rem]">
+                <h3 class="font-fancy2 text-xl md:text-2xl text-text-700">
                   {data.title}
                 </h3>
 
@@ -55,12 +55,12 @@ const currency = new Intl.NumberFormat("en-US", {
                   </p>
                 )}
 
-                <div class="blobMeta">
+                <div class="flex flex-col gap-[0.3rem] text-center mt-[0.6rem]">
                   <span class="priceRibbon">
                     {currency.format(data.price)}
                   </span>
 
-                  <span class={`stockText ${inStock ? "stockIn" : "stockOut"}`}>
+                  <span class={`text-[0.75rem] uppercase ${inStock ? "text-primary-700" : "text-accent-700"}`}>
                     {inStock
                       ? (typeof data.stock === "number"
                           ? `In stock (${data.stock})`
@@ -69,7 +69,7 @@ const currency = new Intl.NumberFormat("en-US", {
                   </span>
                 </div>
               </div>
-            </article>
+            </a>
           );
         })}
       </div>
@@ -78,51 +78,26 @@ const currency = new Intl.NumberFormat("en-US", {
 </section>
 
 <style>
+  section {
+    background:
+      url("/stars-bg.svg") repeat,
+      linear-gradient(
+        to bottom,
+        var(--color-background-50),
+        var(--color-background-100),
+        var(--color-background-200)
+      );
+    background-size:
+      180px 180px,
+      auto;
+    background-blend-mode:
+      normal,
+      normal;
 
-section {
-  background:
-    url("/stars-bg.svg") repeat,
-    linear-gradient(
-      to bottom,
-      var(--color-background-50),
-      var(--color-background-100),
-      var(--color-background-200)
-    );
-  background-size:
-    180px 180px,  /* smaller tile = more stars */
-    auto;
-  background-blend-mode:
-    normal,
-    normal;
-
-  color: var(--color-text);
-  font-family: "Georgia", "Times New Roman", serif;
-}
-
-  /* STOCK TEXT */
-  .stockText {
-    font-size: 0.75rem;
-    letter-spacing: 0.03em;
-    text-transform: uppercase;
-    margin-top: 0.35rem;
-  }
-  .stockIn {
-    color: var(--color-primary-700);
-  }
-  .stockOut {
-    color: var(--color-accent-700);
+    color: var(--color-text);
+    font-family: "Georgia", "Times New Roman", serif;
   }
 
-  /* MAIN BLOB LAYOUT */
-  .blobCard {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 0.9rem;
-    padding: 0.25rem;
-  }
-
-  /* BLOB SHAPE (SOFT ORGANIC STICKER) */
   .blobShape {
     width: 100%;
     max-width: 18rem;
@@ -138,21 +113,6 @@ section {
     border-radius: inherit;
   }
 
-  /* TEXT AREA UNDER BLOB */
-  .blobInfo {
-    text-align: center;
-    max-width: 18rem;
-  }
-
-  .blobMeta {
-    margin-top: 0.6rem;
-    display: flex;
-    flex-direction: column;
-    gap: 0.3rem;
-    align-items: center;
-  }
-
-  /* RIBBON-STYLE PRICE TAG */
   .priceRibbon {
     position: relative;
     display: inline-block;
@@ -173,37 +133,31 @@ section {
     );
     border: 2px solid var(--color-primary-400);
   }
-
-  /* GLITTER FLASH HOVER EFFECT */
-  .glitterHover {
-    position: relative;
-    overflow: hidden;
-  }
-  .glitterHover::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(
-      120deg,
-      transparent 0%,
-      rgba(255, 255, 255, 0.7) 50%,
-      transparent 100%
-    );
-    transform: translateX(-120%);
-    opacity: 0;
-    pointer-events: none;
-  }
-  .glitterHover:hover::before {
-    opacity: 1;
-    animation: glitterSweep 0.7s linear forwards;
-  }
-
-  @keyframes glitterSweep {
-    from {
-      transform: translateX(-120%);
-    }
-    to {
-      transform: translateX(120%);
-    }
-  }
 </style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const links = document.querySelectorAll('a[href^="#"]'); // Select all anchor links with hash
+    links.forEach(link => {
+      link.addEventListener('click', function(event) {
+        event.preventDefault(); // Prevent default jump to top of element
+
+        const targetId = this.getAttribute('href').substring(1); // Get target ID
+        const targetElement = document.getElementById(targetId);
+
+        if (targetElement) {
+          // Calculate the scroll position to center the element
+          const offsetTop = targetElement.getBoundingClientRect().top + window.scrollY;
+          const windowHeight = window.innerHeight;
+          const elementHeight = targetElement.offsetHeight;
+          const scrollPosition = offsetTop - (windowHeight / 2) + (elementHeight / 2);
+
+          window.scrollTo({
+            top: scrollPosition,
+            behavior: 'smooth' // For a smooth scrolling effect
+          });
+        }
+      });
+    });
+  });
+</script>
