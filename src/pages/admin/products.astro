@@ -1,6 +1,7 @@
 ---
 import Layout from '@/layouts/AdminLayout.astro';
 import { supabase } from "@/lib/supabase";
+import { getProducts } from '@/pages/api/products/view';
 
 const accessToken = Astro.cookies.get("sb-access-token");
 const refreshToken = Astro.cookies.get("sb-refresh-token");
@@ -33,11 +34,21 @@ try {
   });
   return Astro.redirect("/admin/signin");
 }
+
+let failed: boolean = false;
+
+const result = await getProducts();
+if (!result.ok) {
+  failed = true;
+}
+console.log(result.data)
 ---
 
-<Layout>
-  <!-- <h1 class="text-lg">Astro</h1> -->
-  <section class="text-center">
-    <p class="text-background-900 font-bold">Work in Progress</p>
-  </section>
+<Layout title="Products">
+  {failed ? (
+    <p>{result.status}</p>
+    <p>{result.message}</p>
+  ) : (
+    <h1>Good Status</h1>
+  )}
 </Layout>
